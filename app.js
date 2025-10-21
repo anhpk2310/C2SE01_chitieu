@@ -46,6 +46,21 @@ app.get('/', (req, res) => {
   });
 });
 
+
+// app.js
+
+// ... (các dòng app.use(...) của bạn)
+
+// --- THÊM ĐOẠN CODE KIỂM TRA NÀY VÀO ---
+app.get('/version', (req, res) => {
+  res.status(200).json({ 
+    version: '1.1 - Redirect Enabled',
+    message: 'Nếu bạn thấy dòng này, server đang chạy code mới nhất!' 
+  });
+});
+// -----------------------------------------
+
+
 // Lấy cổng (PORT)
 const PORT = process.env.PORT || 3000;
 
