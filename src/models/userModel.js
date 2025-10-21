@@ -1,27 +1,37 @@
+// src/models/userModel.js
+
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema({
-  googleId: { 
-    type: String, 
-    index: true, 
-    unique: true, 
-    required: true 
+const userSchema = new Schema({
+  googleId: {
+    type: String,
+    required: true,
   },
-  email: { 
-    type: String, 
-    index: true, 
-    required: true, 
-    unique: true 
+  email: {
+    type: String,
+    required: true,
   },
-  displayName: { 
-    type: String, 
-    required: true 
+  displayName: {
+    type: String,
+    required: true,
   },
-  photo: { 
-    type: String 
+  photo: {
+    type: String,
   },
-
-  
+  // THÊM CÁC TRƯỜNG MỚI
+  profession: { // Nghề nghiệp
+    type: String,
+  },
+  usageReason: { // Lý do sử dụng
+    type: String,
+  },
+  isProfileComplete: { // Cờ để biết người dùng đã hoàn tất thiết lập chưa
+    type: Boolean,
+    default: false,
+  },
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('users', userSchema);
+
+module.exports = User;
