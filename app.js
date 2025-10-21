@@ -52,4 +52,5 @@ const PORT = process.env.PORT || 3000;
 // Lắng nghe các kết nối đến server
 app.listen(PORT, () => {
   console.log(`Server đang chạy tại http://localhost:${PORT}`);
+  console.log('http://localhost:8080/api/auth/google');
 });
