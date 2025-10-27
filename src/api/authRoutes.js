@@ -4,8 +4,17 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 // Import đầy đủ các hàm từ controller
-const { googleCallback, getProfile, logout } = require('../controllers/authController');
+const { googleCallback, getProfile, logout, googleMobileSignIn } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware'); // Import middleware bảo vệ
+
+
+
+// === HÀM MỚI CHO FLUTTER ===
+// @desc    Endpoint cho Flutter gửi idToken lên
+// @route   POST /api/auth/google/mobile
+router.post('/google/mobile', googleMobileSignIn);
+
+
 
 // @desc    Bắt đầu quá trình xác thực với Google
 // @route   GET /api/auth/google
