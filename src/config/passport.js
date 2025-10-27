@@ -16,24 +16,30 @@ module.exports = function(passport) {
           const email = profile.emails && profile.emails[0] && profile.emails[0].value;
           const photo = profile.photos && profile.photos[0] && profile.photos[0].value;
 
-          let existingUser = await User.findOne({ googleId: profile.id });
+          // 1) tìm theo googleId
+          let user = await User.findOne({ googleId: profile.id });
+          if (user) return done(null, user);
 
-          if (existingUser) {
-            // nếu muốn cập nhật token/profile: uncomment & lưu vào user
-            // existingUser.accessToken = accessToken;
-            // existingUser.refreshToken = refreshToken;
-            // await existingUser.save();
-
-            return done(null, existingUser);
+          // 2) nếu không có googleId, tìm theo email (link account nếu tồn tại)
+          if (email) {
+            const userByEmail = await User.findOne({ email: email });
+            if (userByEmail) {
+              // link googleId vào account hiện có
+              userByEmail.googleId = profile.id;
+              if (!userByEmail.displayName) userByEmail.displayName = profile.displayName;
+              if (!userByEmail.photo && photo) userByEmail.photo = photo;
+              await userByEmail.save();
+              return done(null, userByEmail);
+            }
           }
 
+          // 3) không tìm thấy -> tạo mới
           const newUser = await new User({
             googleId: profile.id,
             email: email || undefined,
             displayName: profile.displayName || undefined,
             photo: photo || undefined,
-            // accessToken,
-            // refreshToken,
+            
           }).save();
 
           return done(null, newUser);

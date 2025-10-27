@@ -11,6 +11,9 @@ const connectDB = require('./src/config/db');
 const authRoutes = require('./src/api/authRoutes');
 const userRoutes = require('./src/api/userRoutes');
 
+const adminRoutes = require('./src/api/adminRoutes');
+
+
 // 👈 2. Yêu cầu app chạy file cấu hình passport (sau khi đã có biến môi trường)
 require('./src/config/passport')(passport);
 
@@ -38,6 +41,7 @@ app.use(passport.session());
 // Sử dụng authRoutes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Route thử nghiệm
 app.get('/', (req, res) => {

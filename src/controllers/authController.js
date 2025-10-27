@@ -17,6 +17,8 @@ const googleCallback = (req, res) => {
     { expiresIn: '30d' }
   );
   
+  console.log('✅ Token được tạo:', token);
+
   const userJsonString = JSON.stringify(payload);
   const encodedUser = encodeURIComponent(userJsonString);
 
